@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { Eventing } from './Eventing'
 
 interface UserProps {
     // '?' marks the properties as optional 
@@ -8,6 +9,7 @@ interface UserProps {
 }
 
 export class User {
+    public events: Eventing = new Eventing()
 
     // Set to private so collaborators cannot tinker with it
     constructor(private data: UserProps) { }
@@ -23,10 +25,5 @@ export class User {
 
 
 
-    fetch(): void {
-        axios.get(`http://localhost:3000/users/${this.get('id')}`)
-            .then((response: AxiosResponse): void => {
-                this.set(response.data)
-            })
-    }
+
 }
