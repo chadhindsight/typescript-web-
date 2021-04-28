@@ -16,19 +16,5 @@ export class User {
 
     public sync: Sync<UserProps> = new Sync<UserProps>(rooturl);
 
-    // Set to private so collaborators cannot tinker with it
-    constructor(private data: UserProps) { }
-
-    get(propName: string): (number | string) {
-        return this.data[propName];
-    }
-    // Change and update user's properties
-    set(update: UserProps): void {
-        Object.assign(this.data, update);
-    }
-
-
-
-
 
 }
