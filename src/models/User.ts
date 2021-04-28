@@ -1,7 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import { Eventing } from './Eventing'
+import { Eventing } from './Eventing';
+import { Sync } from './Sync';
 
-interface UserProps {
+
+
+export interface UserProps {
     // '?' marks the properties as optional 
     id?: number,
     name?: string,
