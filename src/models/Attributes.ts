@@ -2,8 +2,8 @@ export class Attributes<T> {
     // Set to private so collaborators cannot tinker with it
     constructor(private data: T) { }
 
-    get(propName: string): (number | string) {
-        return this.data[propName];
+    get<K extends keyof T>(key: K): T[K] {
+        return this.data[key];
     }
     // Change and update user's properties.
     set(update: T): void {
