@@ -4,7 +4,7 @@ import { Attributes } from './Attributes';
 
 
 export interface UserProps {
-    // '?' marks the properties as optional.
+    // '?' marks the properties as optional
     id?: number,
     name?: string,
     age?: number
