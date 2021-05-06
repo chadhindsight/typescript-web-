@@ -1,10 +1,10 @@
 import { User } from './models/User';
 
-const user = new User({ id: 1 })
+const user = User.buildUser({ id: 69 })
 
 // Makes a reference to the eventing functions 
-user.on('save', () => {
+user.on('change', () => {
     console.log(user)
 })
 
-user.save()
+user.fetch()
