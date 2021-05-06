@@ -2,6 +2,7 @@ import { AxiosPromise, AxiosResponse } from "axios";
 
 interface ModelAttributes<T> {
     set(value: T): void;
+    getAll(): T;
     get<K extends keyof T>(key: K): T[K];
 }
 
@@ -48,11 +49,15 @@ export class Model<T extends hasId> {
     }
 
     save(): void {
-        this.sync.save(this.attributes.getAll()).then((response: AxiosResponse): void => {
-            this.trigger('save')
-        }
-        ).catch(() => {
-            this.trigger('error')
-        })
+        this.sync
+            .save(this.attributes.getAll())
+            .then(
+                (response: AxiosResponse): void => {
+                    this.trigger('save');
+                }
+            )
+            .catch(() => {
+                this.trigger('error');
+            });
     }
 }
