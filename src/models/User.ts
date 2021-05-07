@@ -3,6 +3,7 @@ import { ApiSync } from './ApiSync';
 import { Eventing } from './Eventing';
 import { AxiosResponse } from 'axios';
 import { Model } from './Model';
+import { Collection } from './Collection'
 
 export interface UserProps {
     // '?' marks the properties as optional
@@ -10,15 +11,21 @@ export interface UserProps {
     name?: string,
     age?: number
 }
-const rooturl = 'http://localhost:3000/users'
+const rootUrl = 'http://localhost:3000/users'
 
 export class User extends Model<UserProps> {
     static buildUser(attrs: UserProps): User {
         return new User(
             new Attributes<UserProps>(attrs),
             new Eventing(),
-            new ApiSync<UserProps>(rooturl)
+            new ApiSync<UserProps>(rootUrl)
         )
+    }
+
+    static buildUserCollection(): Collection<User, UserProps> {
+        return new Collection<User, UserProps>(rootUrl, (json: UserProps) =>
+            User.buildUser(json)
+        );
     }
 
 
