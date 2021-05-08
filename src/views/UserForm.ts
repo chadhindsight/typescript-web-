@@ -1,5 +1,6 @@
 export class UserForm {
     parent: Element
+
     template(): string {
         return `
         <div> 
@@ -7,5 +8,9 @@ export class UserForm {
             <input />
         </div>
         `
+    }
+    // Takes our template and appends it to parent HTML element
+    render(): void {
+
     }
 }
