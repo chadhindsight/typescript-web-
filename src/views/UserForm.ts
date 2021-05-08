@@ -11,6 +11,9 @@ export class UserForm {
     }
     // Takes our template and appends it to parent HTML element
     render(): void {
+        const templateElement = document.createElement('template');
+        templateElement.innerHTML = this.template();
 
+        this.parent.append(templateElement.content)
     }
 }
