@@ -1,7 +1,12 @@
 import { User } from '../models/User';
 
 export class UserForm {
-    constructor(public parent: Element, public model: User) { }
+    constructor(public parent: Element, public model: User) {
+        // call render method to update the view when data changes
+        this.model.on('change', () => {
+
+        })
+    }
 
 
     eventsMap(): { [key: string]: () => void } {
