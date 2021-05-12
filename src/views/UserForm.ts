@@ -6,7 +6,7 @@ export class UserForm {
     }
 
     bindModel() {
-        // call render method to update the view when data changes.
+        // call render method to update the view when data changes
         this.model.on('change', () => {
             this.render()
         })
