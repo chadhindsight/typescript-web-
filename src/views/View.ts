@@ -6,6 +6,7 @@ export abstract class View {
     }
 
     abstract eventsMap(): { [key: string]: () => void }
+    abstract template(): string
 
     bindModel() {
         // call render method to update the view when data changes
