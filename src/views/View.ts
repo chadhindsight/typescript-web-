@@ -9,7 +9,7 @@ export abstract class View {
     abstract template(): string
 
     bindModel() {
-        // call render method to update the view when data changes late push!
+        // call render method to update the view when data changes 
         this.model.on('change', () => {
             this.render()
         })
