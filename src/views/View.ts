@@ -1,9 +1,11 @@
+import { Model } from '../models/Model'
+
 // Ensure that type T has a certain set of properties tied to it
 interface ModelForView {
     on(eventName: string, callback: () => void): void;
 }
 
-export abstract class View<T extends ModelForView> {
+export abstract class View<T extends Model<K>, K> {
     constructor(public parent: Element, public model: T) {
         this.bindModel()
     }
