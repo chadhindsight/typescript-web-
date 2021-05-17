@@ -1,6 +1,9 @@
-
 // Ensure that type T has a certain set of properties tied to it
-export abstract class View<T> {
+interface ModelForView {
+    on(eventName: string, callback: () => void): void;
+}
+
+export abstract class View<T extends ModelForView> {
     constructor(public parent: Element, public model: T) {
         this.bindModel()
     }
