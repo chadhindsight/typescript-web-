@@ -1,6 +1,6 @@
 import { User } from '../models/User'
 
-export abstract class View {
+export abstract class View<T> {
     constructor(public parent: Element, public model: User) {
         this.bindModel()
     }
