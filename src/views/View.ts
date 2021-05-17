@@ -1,7 +1,7 @@
-import { User } from '../models/User'
 
+// Ensure that type T has a certain set of properties tied to it
 export abstract class View<T> {
-    constructor(public parent: Element, public model: User) {
+    constructor(public parent: Element, public model: T) {
         this.bindModel()
     }
 
