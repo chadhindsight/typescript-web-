@@ -42,6 +42,20 @@ export abstract class View<T extends Model<K>, K> {
         }
     }
 
+
+    mapRegions(fragment: DocumentFragment): void {
+        const regionsMap = this.regionsMap();
+
+        for (let key in regionsMap) {
+            const selector = regionsMap[key];
+            const element = fragment.querySelector(selector);
+
+            if (element) {
+                this.regions[key] = element;
+            }
+        }
+    }
+
     // Takes our template and appends it to parent HTML element
     render(): void {
         this.parent.innerHTML = ''
