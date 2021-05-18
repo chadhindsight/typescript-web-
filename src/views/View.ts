@@ -6,6 +6,8 @@ interface ModelForView {
 }
 
 export abstract class View<T extends Model<K>, K> {
+    regions: { [key: string]: Element } = {}
+
     constructor(public parent: Element, public model: T) {
         this.bindModel()
     }
@@ -13,7 +15,12 @@ export abstract class View<T extends Model<K>, K> {
     eventsMap(): { [key: string]: () => void } {
         return {};
     }
+
     abstract template(): string
+
+    regionsMap(): { [key: string]: string } {
+        return {}
+    }
 
     bindModel() {
         // call render method to update the view when data changes 
