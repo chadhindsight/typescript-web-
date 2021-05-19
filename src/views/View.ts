@@ -56,7 +56,7 @@ export abstract class View<T extends Model<K>, K> {
         }
     }
 
-    // Takes our template and appends it to parent HTML element
+    // Takes our template and appends it to parent the HTML element
     render(): void {
         this.parent.innerHTML = ''
 
