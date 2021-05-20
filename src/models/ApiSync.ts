@@ -1,23 +1,23 @@
-import axios, { AxiosPromise } from "axios";
-import { UserProps } from './User'
+import axios, { AxiosPromise } from 'axios';
 
-interface hasId {
-    id?: number;
+interface HasId {
+  id?: number;
 }
 
-export class ApiSync<T extends hasId> {
-    constructor(public Rooturl: string) { }
-    fetch(id: number): AxiosPromise {
-        return axios.get(`${this.Rooturl}/${id}`)
-    }
+export class ApiSync<T extends HasId> {
+  constructor(public rootUrl: string) {}
 
-    save(data: T): AxiosPromise {
-        const { id } = data;
+  fetch(id: number): AxiosPromise {
+    return axios.get(`${this.rootUrl}/${id}`);
+  }
 
-        if (id) {
-            return axios.put(`${this.Rooturl}${id}`, data)
-        } else {
-            return axios.post(this.Rooturl, data);
-        }
+  save(data: T): AxiosPromise {
+    const { id } = data;
+
+    if (id) {
+      return axios.put(`${this.rootUrl}/${id}`, data);
+    } else {
+      return axios.post(this.rootUrl, data);
     }
+  }
 }

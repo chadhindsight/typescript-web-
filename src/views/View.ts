@@ -1,70 +1,66 @@
-import { Model } from '../models/Model'
-
-// Ensure that type T has a certain set of properties tied to it
-interface ModelForView {
-    on(eventName: string, callback: () => void): void;
-}
+import { Model } from '../models/Model';
 
 export abstract class View<T extends Model<K>, K> {
-    regions: { [key: string]: Element } = {}
+  regions: { [key: string]: Element } = {};
 
-    constructor(public parent: Element, public model: T) {
-        this.bindModel()
+  constructor(public parent: Element, public model: T) {
+    this.bindModel();
+  }
+
+  abstract template(): string;
+
+  regionsMap(): { [key: string]: string } {
+    return {};
+  }
+
+  eventsMap(): { [key: string]: () => void } {
+    return {};
+  }
+
+  bindModel(): void {
+    this.model.on('change', () => {
+      this.render();
+    });
+  }
+
+  bindEvents(fragment: DocumentFragment): void {
+    const eventsMap = this.eventsMap();
+
+    for (let eventKey in eventsMap) {
+      const [eventName, selector] = eventKey.split(':');
+
+      fragment.querySelectorAll(selector).forEach(element => {
+        element.addEventListener(eventName, eventsMap[eventKey]);
+      });
     }
+  }
 
-    eventsMap(): { [key: string]: () => void } {
-        return {};
+  mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+
+    for (let key in regionsMap) {
+      const selector = regionsMap[key];
+      const element = fragment.querySelector(selector);
+
+      if (element) {
+        this.regions[key] = element;
+      }
     }
+  }
 
-    abstract template(): string
+  onRender(): void {}
 
-    regionsMap(): { [key: string]: string } {
-        return {}
-    }
+  render(): void {
+    this.parent.innerHTML = '';
 
-    bindModel() {
-        // call render method to update the view when data changes 
-        this.model.on('change', () => {
-            this.render()
-        })
-    }
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = this.template();
 
-    // Helper method for render
-    bindEvents(fragment: DocumentFragment): void {
-        const eventsMap = this.eventsMap();
+    this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
 
-        for (let eventKey in eventsMap) {
-            const [eventName, selector] = eventKey.split(':');
+    this.onRender();
 
-            fragment.querySelectorAll(selector).forEach(element => {
-                element.addEventListener(eventName, eventsMap[eventKey])
-            })
-        }
-    }
-
-
-    mapRegions(fragment: DocumentFragment): void {
-        const regionsMap = this.regionsMap();
-
-        for (let key in regionsMap) {
-            const selector = regionsMap[key];
-            const element = fragment.querySelector(selector);
-
-            if (element) {
-                this.regions[key] = element;
-            }
-        }
-    }
-
-    // Takes our template and appends it to parent the HTML element
-    render(): void {
-        this.parent.innerHTML = ''
-
-        const templateElement = document.createElement('template');
-        templateElement.innerHTML = this.template();
-
-        this.bindEvents(templateElement.content)
-
-        this.parent.append(templateElement.content)
-    }
+    this.parent.append(templateElement.content);
+  }
 }
