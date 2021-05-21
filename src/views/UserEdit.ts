@@ -10,7 +10,7 @@ export class UserEdit extends View<User, UserProps> {
       userForm: '.user-form'
     };
   }
-  // Handles what happens when view gets rendered
+  // Handles what happens when view gets rendered.
   onRender(): void {
     new UserShow(this.regions.userShow, this.model).render();
     new UserForm(this.regions.userForm, this.model).render();
